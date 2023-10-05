@@ -8,21 +8,7 @@ Define and annotate the following variables with the specified values:
 """
 
 
-a = 1
-pi = 3.14
-i_understand_annotations = True
-school = "Holberton"
-
-
-def main():
-    """
-    Main Function
-    """
-    print(a)
-    print(pi)
-    print(i_understand_annotations)
-    print(school)
-    print(type(a))
-    print(type(pi))
-    print(type(i_understand_annotations))
-    print(type(school))
+a: int = 1
+pi: float = 3.14
+i_understand_annotations: bool = True
+school: str = 'Holberton'
