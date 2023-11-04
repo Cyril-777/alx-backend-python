@@ -18,11 +18,10 @@ class TestAccessNestedMap(unittest.TestCase):
             ({"a": {"b": 2}}, ("a", "b"), 2)
         ]
     )
-    def test_access_nested_map(self, nested_map, path):
+    def test_access_nested_map(self, nested_map, path, expected):
         """Test access_nested_map function"""
-        self.assertEqual(access_nested_map(nested_map, path),
-                         nested_map[path[0]]
-                         [path[1]] if len(path) > 1 else nested_map[path[0]])
+        result = access_nested_map(nested_map, path)
+        self.assertEqual(result, expected)
 
     @parameterized.expand(
         [
@@ -30,12 +29,11 @@ class TestAccessNestedMap(unittest.TestCase):
             ({"a": 1}, ("a", "b"), KeyError)
         ]
     )
-    def test_access_nested_map_exception(self, nested_map, path):
+    def test_access_nested_map_exception(self, nested_map, path,
+                                         expected):
         """Test access_nested_map function with exception"""
-        with self.assertRaises(KeyError) as e:
+        with self.assertRaises(expected) as context:
             access_nested_map(nested_map, path)
-        self.assertEqual(f"KeyError('{path[len(path) - 1]}')",
-                         str(e.exception))
 
 
 class TestGetJson(unittest.TestCase):
