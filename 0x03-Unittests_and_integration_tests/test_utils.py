@@ -11,21 +11,25 @@ from utils import access_nested_map, get_json, memoize
 class TestAccessNestedMap(unittest.TestCase):
     """TestAccessNestedMap class"""
 
-    @parameterized.expand([
-        ({"a": 1}, ("a",)),
-        ({"a": {"b": 2}}, ("a",)),
-        ({"a": {"b": 2}}, ("a", "b"))
-    ])
+    @parameterized.expand(
+        [
+            ({"a": 1}, ("a",), 1),
+            ({"a": {"b": 2}}, ("a",), {"b": 2}),
+            ({"a": {"b": 2}}, ("a", "b"), 2)
+        ]
+    )
     def test_access_nested_map(self, nested_map, path):
         """Test access_nested_map function"""
         self.assertEqual(access_nested_map(nested_map, path),
                          nested_map[path[0]]
                          [path[1]] if len(path) > 1 else nested_map[path[0]])
 
-    @parameterized.expand([
-        ({}, ("a",)),
-        ({"a": 1}, ("a", "b"))
-    ])
+    @parameterized.expand(
+        [
+            ({}, ("a",), KeyError),
+            ({"a": 1}, ("a", "b"), KeyError)
+        ]
+    )
     def test_access_nested_map_exception(self, nested_map, path):
         """Test access_nested_map function with exception"""
         with self.assertRaises(KeyError) as e:
